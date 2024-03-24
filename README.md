@@ -130,4 +130,4 @@ set output_file="ffmpeg_output\Story05_CG01"
 
 # Зависимости
 [Devyatyi9/HI3rd_usm_sbt_patcher](https://github.com/Devyatyi9/HI3rd_usm_sbt_patcher/releases/tag/test2)
-[Программа для сборки USM]()
+Программа для сборки USM - автор artserious (это дискорд ник). Он не загружал ее на гит.
