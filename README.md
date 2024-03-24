@@ -65,15 +65,15 @@ set output_file="ffmpeg_output\Story05_CG01"
 16. Провеярем результат через катсцены во внутриигровой коллекции. Повторюсь, перезаходить в игру не требуется. 
 
 # Обьяснения форматов файлов
-**txt** - что угодно
-**srt** - субтитры
-**usm** - видеоролики (медиа, аудио, субтитры в одном файле)
-**m2v** - медиа файл после vgmtoolbox (без аудио и сабов)
-**hca** - аудио файл после vgmtoolbox (без аудио и сабов)
-**mp4** - видеоролик (медиа, аудио, сабы в зависимости от сборки)
-**bat** - самодельные скрипты
-**md** - файлы документации
-**exe** - файлы дистрибутив
+* **txt** - что угодно
+* **srt** - субтитры
+* **usm** - видеоролики (медиа, аудио, субтитры в одном файле)
+* **m2v** - медиа файл после vgmtoolbox (без аудио и сабов)
+* **hca** - аудио файл после vgmtoolbox (без аудио и сабов)
+* **mp4** - видеоролик (медиа, аудио, сабы в зависимости от сборки)
+* **bat** - самодельные скрипты
+* **md** - файлы документации
+* **exe** - файлы дистрибутив
 
 # Скрипты
 Написал скрипт `extract.bat` - достает из usm файла сабы
@@ -85,12 +85,6 @@ set output_file="ffmpeg_output\Story05_CG01"
 Написал скрипт `convert.bat` - конвертирует формат сабов. Перед запуском требуется запустить extract.bat, чтобы он создал файлы .srt
 1. В строке `set "folder_name=6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a"` изменяем название файла
 2. Запускаем скрипт
-
-Написал скрипт `ffmpeg_convert_m2v_to_mp4.bat` - конвертирует m2v в mp4 без аудиодорожки
-1. Указать путь до ffmpeg `set ffmpeg_path="C:\Files\Projects\Mihoyo depacker\patcher\distr\ffmpeg\bin\ffmpeg.exe"`
-2. Указать путь до m2v файла `set input_file="vgmtoolbox_output\6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a_40534656"`
-3. Указать путь для выходного видео файла `set output_file="ffmpeg_output\output_m2v_to_mp4"`
-4. Запускаем скрипт
 
 Написал скрипт `ffmpeg_convert_m2v+hca_to_mp4.bat` - конвертирует m2v+hca в mp4 (с аудиодорожкой)
 1. Указать путь до ffmpeg `set ffmpeg_path="C:\Files\Projects\Mihoyo depacker\patcher\distr\ffmpeg\bin\ffmpeg.exe"`
@@ -122,7 +116,7 @@ set output_file="ffmpeg_output\Story05_CG01"
 
 0. Китайский
 1. Английский
-...
+2. ...
 
 Файл `6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a.usm`
 
