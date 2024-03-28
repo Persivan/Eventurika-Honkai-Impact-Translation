@@ -17,7 +17,7 @@ int main()
     }
 
     Builder builder = new Builder();
-    builder.readFileNames();                                // Считываем названия файлов
+    builder.readFileNames(IOStore.input);                   // Считываем названия файлов
     VideoInfo videoInfo = builder.convertToAviAndWav();     // Пересобираем файлы с формат пригодный для энкодера
     builder.encode(videoInfo);                              // Собираем в usm
 
