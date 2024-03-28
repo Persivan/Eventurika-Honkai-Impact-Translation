@@ -1,1 +1,1 @@
-./USM_Builder.exe "usm_builder_input" "distr/ffmpeg" "distr/Scaleform VideoEncoder" "usm_builder_output" "devitiy_patcher"
+./USM_Builder.exe "usm_builder_input" "distr/ffmpeg" "distr/Scaleform VideoEncoder" "usm_builder_output" "devyatyi_patcher"

@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace USM_builder
 {
+    /// <summary>
+    /// Хранилище для всех констант
+    /// </summary>
     internal class IOStore
     {
+        public static string input = Environment.GetCommandLineArgs()[1];
+        public static string ffmpegPath = Environment.GetCommandLineArgs()[2];
+        public static string encoderPath = Environment.GetCommandLineArgs()[3];
+        public static string output = Environment.GetCommandLineArgs()[4];
+        public static string usmSubtitleToolbox = Environment.GetCommandLineArgs()[5];
     }
 }
