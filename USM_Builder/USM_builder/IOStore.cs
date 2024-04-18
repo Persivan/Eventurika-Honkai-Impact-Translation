@@ -13,8 +13,9 @@ namespace USM_builder
     {
         public static string input = Environment.GetCommandLineArgs()[1];
         public static string ffmpegPath = Environment.GetCommandLineArgs()[2];
-        public static string encoderPath = Environment.GetCommandLineArgs()[3];
-        public static string output = Environment.GetCommandLineArgs()[4];
-        public static string usmSubtitleToolbox = Environment.GetCommandLineArgs()[5];
+        public static string ffprobePath = Environment.GetCommandLineArgs()[3];
+        public static string encoderPath = Environment.GetCommandLineArgs()[4];
+        public static string output = Environment.GetCommandLineArgs()[5];
+        public static string usmSubtitleToolbox = Environment.GetCommandLineArgs()[6];
     }
 }
