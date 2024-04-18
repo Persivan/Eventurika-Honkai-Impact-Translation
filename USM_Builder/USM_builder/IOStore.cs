@@ -16,6 +16,6 @@ namespace USM_builder
         public static string ffprobePath = Environment.GetCommandLineArgs()[3];
         public static string encoderPath = Environment.GetCommandLineArgs()[4];
         public static string output = Environment.GetCommandLineArgs()[5];
-        public static string usmSubtitleToolbox = Environment.GetCommandLineArgs()[6];
+        //public static string usmSubtitleToolbox = Environment.GetCommandLineArgs()[6];
     }
 }
