@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -67,7 +67,7 @@ namespace USM_builder
         {
             if (!Directory.Exists(IOStore.output)) Directory.CreateDirectory(IOStore.output);
 
-            const string mp4File = "C:/Users/server/source/repos/USM_builder/USM_builder/bin/Debug/net8.0/input/Story05_CG01.mp4";
+            const string mp4File = "usm_builder_input/Story05_CG01.mp4";
 
             ProcessStartInfo processStartInfo = new ProcessStartInfo();
             processStartInfo.FileName = IOStore.ffmpegPath + "/bin/ffprobe.exe";
@@ -125,15 +125,15 @@ namespace USM_builder
             Console.WriteLine(DateTime.Now + " - Передаем файл в Scaleform...");
 
             string[] hardcode = [
-                "C:/Users/server/source/repos/USM_builder/USM_builder/bin/Debug/net8.0/input/Story05_CG01.avi",
-                "C:/Users/server/source/repos/USM_builder/USM_builder/bin/Debug/net8.0/input/Story05_CG01.wav",
-                "C:/Users/server/source/repos/USM_builder/USM_builder/bin/Debug/net8.0/input/Story05_CG01.txt",
-                "C:/Users/server/source/repos/USM_builder/USM_builder/bin/Debug/net8.0/input/Story05_CG01.usm"
+                "usm_builder_input/Story05_CG01.avi",
+                "usm_builder_input/Story05_CG01.wav",
+                "usm_builder_input/Story05_CG01_en.txt",
+                "usm_builder_output/Story05_CG01.usm"
                 ];
 
             // .avi, .wav, .txt, {VideoBitrate 885833, AudioBitrate 129498}
             convertInVideoEncoder(hardcode[0], hardcode[1], hardcode[2], videoInfo);
-            fixSubtitles(hardcode[3]);
+            //fixSubtitles(hardcode[3]);
         }
 
         /// <summary>
