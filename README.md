@@ -20,9 +20,9 @@
 1. Помещаем интересующий нас файл из `BH3_Data/StreamingAssets/Video` в `usm_videos`
 Например `Story05_CG01.usm`
 `cp "C:\Program Files\Honkai Impact 3rd glb\Games\BH3_Data\StreamingAssets\Video\Story05_CG01.usm" "C:\Files\Projects\Mihoyo depacker\patcher\unpack\usm_videos\Story05_CG01.usm"`
-2. В файле `.usm_extract.bat` указываем файл, без расширения
+2. В файле `.usm_srt_extract.bat` указываем файл, без расширения
 `set "folder_name=Story05_CG01"`
-3. Запускаем экспорт субтитров `.usm_extract.bat`
+3. Запускаем экспорт субтитров `.usm_srt_extract.bat`
 При выполнение будут созданы папки `logs/Story05_CG01` и `srt/Story05_CG01`. В `srt/Story05_CG01` будут храниться все хранимые в файле субтитры.
 Если каких-то не хватает, можно проверить `logs/Story05_CG01`. Надпись `Subtitles not found in this file` означает, что по указанному номеру нет субтитров.
 Это первый этап на котором вы можете переводить текст в файле с англ субтитрами `file1.srt`. Если файла `file1.srt` нет, то англ. субтитров нет для этого файла. Для такого файла русские субтитры создать не получится.
@@ -71,7 +71,7 @@
 * **exe** - исполняемые файлы 
 
 # Скрипты
-Написал скрипт `.usm_extract.bat` - достает из usm файла сабы
+Написал скрипт `.usm_srt_extract.bat` - достает из usm файла сабы
 1. Помещаем файл из `BH3_Data\StreamingAssets\Video` в `./usm_videos/`
 2. В строке `set "folder_name=6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a"` изменяем название файла
 3. Запускаем скрипт
