@@ -10,8 +10,8 @@ namespace USM_builder
     internal class Builder
     {
         private string _currentDirectory = Directory.GetCurrentDirectory();
-        private List<string> _fileNames = new List<string>();   // @todo переписать под использованием типа FileNames
-                                                                // @todo чтобы была возможность использовать разные имена файлов
+        private List<FileNames> _fileNames = new List<FileNames>();     // @todo переписать под использованием типа FileNames
+                                                                        // @todo чтобы была возможность использовать разные имена файлов
 
         /// <summary>
         /// Функция берет все .mp4, .txt файлы из папки. 
@@ -46,11 +46,11 @@ namespace USM_builder
                 // при неудаче, сообщаем пользователю. Уже пользователь решает, что делать с этим файлом
                 if (txtBaseNames.Contains(mp4BaseName + "_en"))
                 {
-                    _fileNames.Add(mp4BaseName);
-                }
-                else
-                {
-                    Console.WriteLine($"Файл субтитров для '{filePath}/{mp4BaseName}.mp4' не найден");
+                    // @todo убрать "_en.txt", как минимум стоит сделать выбор испольщовать приписку "_en" или нет
+                    _fileNames.Add(new FileNames(mp4BaseName, mp4BaseName + ".avi", mp4BaseName + "_en.txt", mp4BaseName + ".wav"));
+                } 
+                else {
+                    Console.WriteLine($"Файл субтитров для '{filePath}/{mp4BaseName}.avi' не найден");
                 }
             }
 
@@ -66,37 +66,62 @@ namespace USM_builder
         /// <param name="videoInfo"></param>
         public void encodeAll()
         {
-            Console.WriteLine(DateTime.Now + " - Передаем файл в Scaleform...");
+            if (_fileNames.Count == 0) {
+                Console.WriteLine(DateTime.Now + " - encodeAll - файлы не найдены");
+                return;
+            }
 
-            string[] hardcode = [
-                "usm_builder_input/Story05_CG01.avi",
-                "usm_builder_input/Story05_CG01.wav",
-                "usm_builder_input/Story05_CG01_en.txt",
-                "usm_builder_output/Story05_CG01.usm"
-            ];
+            Console.WriteLine(DateTime.Now + " - Передаем файлы в Scaleform...");
 
-            // Create an instance of FfmpegHelper
-            FfmpegHelper ffmpegHelper = new FfmpegHelper(IOStore.ffmpegPath, IOStore.ffprobePath);
+            int counter = 0;
+            foreach (var file in _fileNames)
+            {
+                Console.WriteLine(DateTime.Now + $" - файл номер: {counter++}, {file.filename}");
+                // Create an instance of FfmpegHelper
+                FfmpegHelper ffmpegHelper = new FfmpegHelper(IOStore.ffmpegPath, IOStore.ffprobePath);
 
-            // Get the bitrate of the AVI video file
-            int videoBitrate = ffmpegHelper.GetVideoBitrate(hardcode[0]);
-            Console.WriteLine($"Video Bitrate: {videoBitrate} b/s");
+                // Get the bitrate of the AVI video file
+                int videoBitrate = ffmpegHelper.GetVideoBitrate(IOStore.input + "/" + file.media);
+                Console.WriteLine(DateTime.Now + $"Video Bitrate: {videoBitrate} b/s");
 
-            // Get the bitrate of the WAV audio file
-            int audioBitrate = ffmpegHelper.GetAudioBitrate(hardcode[1]);
-            Console.WriteLine($"Audio Bitrate: {audioBitrate} b/s");
+                // Get the bitrate of the WAV audio file
+                int audioBitrate = ffmpegHelper.GetAudioBitrate(IOStore.input + "/" + file.audio);
+                Console.WriteLine(DateTime.Now + $"Audio Bitrate: {audioBitrate} b/s");
 
-            // Get the bitrate of the WAV audio file
-            float frameRate = ffmpegHelper.GetVideoFrameRate(hardcode[0]);
-            Console.WriteLine($"Video Frameate: {frameRate} fps");
+                // Get the bitrate of the AVI video file
+                float frameRate = ffmpegHelper.GetVideoFrameRate(IOStore.input + "/" + file.media);
+                Console.WriteLine(DateTime.Now + $"Video Frameate: {frameRate} fps");
 
-            // .avi, .wav, .txt, 885833, 129498, 24
-            convertInVideoEncoder(hardcode[0], hardcode[1], hardcode[2], videoBitrate, audioBitrate, frameRate);
+                // .avi, .wav, .txt, 885833, 129498, 24
+                convertInVideoEncoder(file.media, file.audio, file.txt, videoBitrate, audioBitrate, frameRate);
+            }
+        }
+
+        public void createPlaceHolderSubtitleFile()
+        {
+            // Specify the file path
+            string filePath = "assets/placeholder_subtitles.txt";
+
+            // Check if the directory exists, if not, create it
+            string directoryPath = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            // Check if the file exists, if not, create it and write content
+            if (!File.Exists(filePath))
+            {
+                string content = @"1000
+0000, 0001, .";
+
+                File.WriteAllText(filePath, content);
+            }
         }
 
         /// <summary>
         /// Сборка avi + wav + txt файлов в .usm
-        /// @todo проверить почему энкодеру не нравится формат сабов
+        /// @todo проверить почему энкодеру не нравится формат сабов (возмонжо т.к. в конце строки есть NULLNULL)
         /// </summary>
         /// <param name="videoFileName"></param>
         /// <param name="audioFileName"></param>
@@ -107,7 +132,7 @@ namespace USM_builder
             Console.WriteLine(DateTime.Now + " - Scaleform - внесение параметров...");
             var processStartInfo = new ProcessStartInfo();
             var outputFile = IOStore.output + '/' + Path.GetFileNameWithoutExtension(videoFileName) + ".usm";
-            processStartInfo.FileName = IOStore.encoderPath + "/medianocheH264.exe";
+            processStartInfo.FileName = IOStore.encoderPath;
             processStartInfo.Arguments = String.Format(
                 "-target=xboxone -h264_profile=high -hca=on -hca_quality=5 -video00=\"{0}\" -output=\"{1}\" -bitrate={2} {3} -framerate={4} -subtitle00=\"{6}\" -subtitle01=\"{5}\"", // -subtitle00 и -subtitle01 дублируются т.к. Scaleform video encoder не умеет записывать строго в 1 дорожку сабы, он пишет сначала в 0 потом в 1
                 videoFileName,

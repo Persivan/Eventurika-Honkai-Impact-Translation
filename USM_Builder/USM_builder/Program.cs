@@ -18,6 +18,7 @@ int main()
 
     Builder builder = new Builder();
     builder.readFileNames(IOStore.input);                   // Считываем названия файлов
+    builder.createPlaceHolderSubtitleFile();                // Создание файла если не существует
     builder.encodeAll();                                    // Собираем в usm
 
     return 0;

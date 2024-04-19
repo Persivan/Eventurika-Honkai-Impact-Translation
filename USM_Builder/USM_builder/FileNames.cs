@@ -12,6 +12,14 @@ namespace USM_builder
     /// </summary>
     internal class FileNames
     {
+        public FileNames(string filename, string media, string txt, string audio)
+        {
+            this.filename = filename;
+            this.media = media;
+            this.txt = txt;
+            this.audio = audio;
+        }
+        public string filename { get; set; } // без расширения
         public string media { get; set; }
         public string txt { get; set; }
         public string audio { get; set; }
