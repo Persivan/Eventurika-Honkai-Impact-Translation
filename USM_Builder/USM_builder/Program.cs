@@ -8,13 +8,19 @@ main();
 
 int main()
 {
+    Console.OutputEncoding = System.Text.Encoding.UTF8;
     // Проверка параметров запуска
-    if (args.Length != 6 || args.Contains("-h") || args.Contains("-help"))
+    if (args.Length != 5 || args.Contains("-h") || args.Contains("-help"))
     {
-        Console.WriteLine("Usage: USM_builder <input_directory> <ffmpeg_path> <ffprobe_path> <encoder_path> <output_directory> <usm_subtitle_toolbox_path>");
-        Console.WriteLine("Example: USM_builder \"input\" \"distr/ffmpeg/bin/ffmpeg.exe\" \"distr/ffmpeg/bin/ffprobe.exe\" \"distr/Scaleform VideoEncoder\" \"output\" \"USM_subs_toolbox.exe\"");
+        Console.WriteLine("Usage: USM_builder <input_directory> <ffmpeg_path> <ffprobe_path> <encoder_path> <output_directory>");
+        Console.WriteLine("Example: USM_builder \"input\" \"distr/ffmpeg/bin/ffmpeg.exe\" \"distr/ffmpeg/bin/ffprobe.exe\" \"distr/Scaleform VideoEncoder\" \"output\"");
         return -1;
     }
+
+#if DEBUG
+    Environment.CurrentDirectory = "..\\..\\..\\..\\..\\";
+    Console.WriteLine("Рабочая директория: \n" + Environment.CurrentDirectory);
+#endif
 
     Builder builder = new Builder();
     if (builder.readFileNames(IOStore.input) == 0)          // Считываем названия файлов
