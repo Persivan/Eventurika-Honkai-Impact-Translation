@@ -79,9 +79,8 @@ namespace USM_builder
             {
                 FileName = ffmpegPath,
                 Arguments = command,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true
+                RedirectStandardError = true, // с включенным редиректом в вывод не попадает сообщение о перезаписи файла
+                UseShellExecute = false
             };
 
             using (Process process = Process.Start(processStartInfo))
@@ -90,6 +89,7 @@ namespace USM_builder
                 {
                     process.WaitForExit();
                     string output = process.StandardError.ReadToEnd();
+                    //string output = "aboba";
                     return output;
                 }
                 else
@@ -106,6 +106,14 @@ namespace USM_builder
             // Parsing the output to find the frame rate
             float frameRate = ParseFrameRate(output);
             return frameRate;
+        }
+
+        public string ConvertInFfmpeg(string videoFilePath, string audioFilePath, string outputVideoFilePath, string outputAudioFilePath)
+        {
+            string command = $"-i \"{videoFilePath}\" -i \"{audioFilePath}\" \"{outputVideoFilePath}\" \"{outputAudioFilePath}\"";
+            string output = RunFFmpegCommand(command);
+            // @todo если output вернул ошибку, надо кидать исключение
+            return output;
         }
 
         private float ParseFrameRate(string output)

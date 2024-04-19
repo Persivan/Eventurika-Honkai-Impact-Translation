@@ -31,38 +31,34 @@
 `set "folder_name=Story05_CG01"`
 5. Запускаем конвертацию файла субтитров
 `.usm_convert.bat`
-При выполнение будут созданы папки `logs/Story05_CG01` и `srt/Story05_CG01` (Если вы не пропускали прошлые пункты, то должно выдать ошибку `A subdirectory or file srt/Story05_CG01 already exists.` и `A subdirectory or file log/Story05_CG01 already exists.`).
+При выполнение будут созданы папки `logs/Story05_CG01` и `srt/Story05_CG01` (Если вы не пропускали прошлые пункты, то должно выдать сообщение `A subdirectory or file srt/Story05_CG01 already exists.` и `A subdirectory or file log/Story05_CG01 already exists.`).
 6. В `srt/Story05_CG01` будут храниться конвертированные файлы субтитров.
 Конвертирование нужна для будущей сборки.
 Это второй этап, последний этап, на котором вы можете переводить текст в файле с англ субтитрами `converted1.srt`.
 6. Переведенный файл кладем в папку `usm_builder_input` и называем его `Story05_CG01_en.txt`
 7. Открываем VGMToolBox. В интерфейсы программы: Misc. Tools -> Stream Tools -> Video Demultiplexer -> Формат "USM (CRI Movie 2)"
-8. Закидываем файл из `usm_videos` (Story05_CG01.usm)
+8. Закидываем файл (файлы) из `usm_videos` (Story05_CG01.usm)
 В этой же папке будет создана два файла: `Story05_CG01_40534656.m2v` и `Story05_CG01_40534641.hca`. m2v - видео-дорожка. hca - аудио-дорожка.
-9. Переносим эти файлы (`Story05_CG01_40534656.m2v` и `Story05_CG01_40534641.hca`) в папку `vgmtoolbox_output`.
-10. В файле `.ffmpeg_convert_to_mp4.bat` меняем
-ffmpeg_path - путь да исполняемого файла ffmpeg
-m2v_file - путь до видео-дорожки
-hca_file - путь до аудио-дорожки
-output_file - названия для будущего mp4 файла 
-```
-set ffmpeg_path="C:\Files\Projects\Mihoyo depacker\patcher\distr\ffmpeg\bin\ffmpeg.exe"
-set m2v_file="vgmtoolbox_output\Story05_CG01"
-set hca_file="vgmtoolbox_output\Story05_CG01"
-set output_file="ffmpeg_output\Story05_CG01"
-```
-11. Запускаем сборку mp4 файла `.ffmpeg_convert_to_mp4.bat`
-Это создаст папку `ffmpeg_output` и в ней mp4 файл с видео и аудио `Story05_CG01.mp4`
-12. Собранный файл кладем в папку `usm_builder_input`.
-На данном этапе в папке должно быть два файла: `Story05_CG01.mp4` и `Story05_CG01_en.txt`
-13. Открываем USM_builder (для его работы требуется net framework).
-В нем указываем пути до ffmpeg. Теперь не до исполняемого файла, а до папки bin
-Путь до Scaleform VideoEncoder
-14. Тыкаем Старт
-Прога подглючивает, начинает не с первого раза. Успешный старт - если открылось еще одно окно и посыпались строчки с процентами прогресса.
-Процесс занимает 2-3 минуты И ЗАВЕРШАЕТСЯ КРАШЕМ. Однако, файл сгенерирован и храниться в `usm_builder_output`
-15. Переносим файл обратно в папку с игрой `BH3_Data/StreamingAssets/Video` с заменой файла. Старый файл мы сохранили в `usm_videos`
-16. Провеярем результат через катсцены во внутриигровой коллекции. Повторюсь, перезаходить в игру не требуется. 
+9. Переносим эти файлы (`Story05_CG01_40534656.m2v` и `Story05_CG01_40534641.hca`) в папку `usm_builder_input`.
+10. Переименовываем эти файлы, убираем мусор из названия (`Story05_CG01.m2v` и `Story05_CG01.hca`).
+11. На этом этапе в папке `usm_builder_input` можно размещать множество файлов. Для создания одного .usm файла в папке `usm_builder_input` должно быть 3 файла
+    * FILENAME.m2v - видео (`Story05_CG01.m2v`)
+    * FILENAME.hca - аудио (`Story05_CG01.hca`)
+    * FILENAME_en.txt - сабы (`Story05_CG01_en.txt`)
+12. В файле `.start_usm_builder.bat` меняем
+`./USM_Builder.exe "usm_builder_input" "distr/ffmpeg/bin/ffmpeg.exe" "distr/ffmpeg/bin/ffprobe.exe" "distr/Scaleform VideoEncoder/medianocheH264.exe" "usm_builder_output" "distr/USM_subs_toolbox.exe"`
+* "usm_builder_input" - путь до папки с файлами .avi (видео), .txt (субтитры), .wav (аудио)
+* "distr/ffmpeg/bin/ffmpeg.exe" - путь до ffmpeg.exe
+* "distr/ffmpeg/bin/ffprobe.exe" - путь до ffprobe.exe
+* "distr/Scaleform VideoEncoder/medianocheH264.exe" - путь до энкодера
+* "usm_builder_output" - путь до папки с результатами (будет создана если не существует)
+* "distr/USM_subs_toolbox.exe"` - путь до патчера от Девятого (НЕ ИСПОЛЬЗУЕТСЯ @TODO начать его использовать для получения сабов из .usm файлов)
+13. Запускаем Сборку .usm файла
+`.usm_convert.bat`
+При выполнение будет создана папка `usm_builder_temp`. После успешного или не успешного выполнения скрипта, ее можно удалить.
+Если эта папка существует и в ней есть файлы с тем же названием, например, вы повторно запустили скрипт, то в консоли попросит подвердить перезапись файлов .avi и .wav.
+Может быть ошибка нехватки .NET, ставьте отсюда https://dotnet.microsoft.com/en-us/download/dotnet/8.0
+14. Результат обратно кидаем в `BH3_Data/StreamingAssets/Video`. Если что, бэкап у нас есть в `usm_videos`.
 
 # Обьяснения форматов файлов
 * **txt** - что угодно
@@ -70,36 +66,26 @@ set output_file="ffmpeg_output\Story05_CG01"
 * **usm** - видеоролики (медиа, аудио, субтитры в одном файле)
 * **m2v** - медиа файл после vgmtoolbox (без аудио и сабов)
 * **hca** - аудио файл после vgmtoolbox (без видео и сабов)
-* **mp4** - видеоролик (медиа, аудио, сабы в зависимости от сборки)
 * **bat** - самодельные скрипты
 * **md** - файлы документации
 * **exe** - исполняемые файлы 
 
 # Скрипты
-Написал скрипт `extract.bat` - достает из usm файла сабы
+Написал скрипт `.usm_extract.bat` - достает из usm файла сабы
 1. Помещаем файл из `BH3_Data\StreamingAssets\Video` в `./usm_videos/`
 2. В строке `set "folder_name=6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a"` изменяем название файла
 3. Запускаем скрипт
 Достанет 0-7 дорожки сабов в папку `./srt/6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a/`, лог в `./logs/6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a/`
 
-Написал скрипт `convert.bat` - конвертирует формат сабов. Перед запуском требуется запустить extract.bat, чтобы он создал файлы .srt
+Написал скрипт `.usm_convert.bat` - конвертирует формат сабов. Перед запуском требуется запустить extract.bat, чтобы он создал файлы .srt
 1. В строке `set "folder_name=6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a"` изменяем название файла
 2. Запускаем скрипт
 
-Написал скрипт `ffmpeg_convert_m2v+hca_to_mp4.bat` - конвертирует m2v+hca в mp4 (с аудиодорожкой)
-1. Указать путь до ffmpeg `set ffmpeg_path="C:\Files\Projects\Mihoyo depacker\patcher\distr\ffmpeg\bin\ffmpeg.exe"`
-2. Указать путь до m2v файла `set m2v_file="vgmtoolbox_output\6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a_40534656"`
-3. Указать путь до hca файла `set hca_file="vgmtoolbox_output\6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a_40534641"`
-4. Указать путь для выходного видео файла `set output_file="ffmpeg_output\output_m2v_to_mp4"`
-5. Запускаем скрипт
-
 # Особенности
 ## Хранение файлов
-Все usm файлы надо хранить в `./usm_videos`. Запуск в таком случае `Test.exe -extractSbt "usm_videos/kiana.usm" -l 4`. файл с сабами будет лежать в usm_videos/kiana.srt. Иначе будет ошибка: `Error : [file_open,null/test.srt]`
+Все usm файлы надо хранить в `./usm_videos`. USM_subs_toolbox иначе не работает. Запуск в таком случае `Test.exe -extractSbt "usm_videos/kiana.usm" -l 4`. файл с сабами будет лежать в usm_videos/kiana.srt. Иначе будет ошибка: `Error : [file_open,null/test.srt]`
 ## Индекс сабов
 В некоторых файлах нет англ сабов (1 индекс), т.к. на экране буквально англ текст. После сборки подобных файлов мы все равно не получим сабы на экране
-## Сборка USM файла
-Выкидывает исключение, но **один** файл собирается успешно
 
 # Языки
 Файл `usm_videos/7.1_Birthday_Kiana_21f3d1f775e2938ac9c205e53d88bd82.usm`
@@ -136,3 +122,4 @@ set output_file="ffmpeg_output\Story05_CG01"
 [Devyatyi9/HI3rd_usm_sbt_patcher](https://github.com/Devyatyi9/HI3rd_usm_sbt_patcher/releases/tag/test2)
 
 Программа для сборки USM - автор artserious (это дискорд ник). Он не загружал ее на гит.
+UPD: больше не используется, прога переписана под консольный интерфейс

@@ -21,10 +21,10 @@ namespace USM_builder
         /// Если такой файл НЕ найден, то об этом будет сообщено пользователю
         /// </summary>
         /// <param name="filePath"></param>
-        public void readFileNames(string filePath)
+        public int readFileNames(string filePath)
         {
             // Получаем список .mp4 файлов
-            var mp4Files = Directory.GetFiles(filePath, "*.mp4");
+            var mp4Files = Directory.GetFiles(filePath, "*.m2v");
 
             // Получаем список .txt файлов
             var txtFiles = Directory.GetFiles(filePath, "*.txt");
@@ -40,7 +40,7 @@ namespace USM_builder
                 if (mp4BaseName == null)
                 {
                     Console.WriteLine($"Ошибка - код 01, сообщите разработчикам");
-                    return;
+                    return 0;
                 }
                 // Проверяем, существует ли соответствующий файл .txt, при успехе добавляем в список
                 // при неудаче, сообщаем пользователю. Уже пользователь решает, что делать с этим файлом
@@ -56,6 +56,7 @@ namespace USM_builder
 
             // Результат выполнения
             Console.WriteLine($"Найдено {_fileNames.Count * 2} файла(ов). Можно сгенерировать {_fileNames.Count} .usm файла(ов)");
+            return _fileNames.Count;
         }
 
 
@@ -80,27 +81,30 @@ namespace USM_builder
                 // Create an instance of FfmpegHelper
                 FfmpegHelper ffmpegHelper = new FfmpegHelper(IOStore.ffmpegPath, IOStore.ffprobePath);
 
+                // Converting media and audio files @todo Привязать к нашей консольке, чтобы была возможность ввода Y/N когда спрашивает перезаписывать ли существующий файл
+                ffmpegHelper.ConvertInFfmpeg($"{IOStore.input}/{file.filename}.m2v", $"{IOStore.input}/{file.filename}.hca", $"{IOStore.tempFolder}/{file.media}", $"{IOStore.tempFolder}/{file.audio}");
+
                 // Get the bitrate of the AVI video file
-                int videoBitrate = ffmpegHelper.GetVideoBitrate(IOStore.input + "/" + file.media);
+                int videoBitrate = ffmpegHelper.GetVideoBitrate($"{IOStore.tempFolder}/{file.filename}.avi");
                 Console.WriteLine(DateTime.Now + $"Video Bitrate: {videoBitrate} b/s");
 
-                // Get the bitrate of the WAV audio file
-                int audioBitrate = ffmpegHelper.GetAudioBitrate(IOStore.input + "/" + file.audio);
-                Console.WriteLine(DateTime.Now + $"Audio Bitrate: {audioBitrate} b/s");
-
                 // Get the bitrate of the AVI video file
-                float frameRate = ffmpegHelper.GetVideoFrameRate(IOStore.input + "/" + file.media);
+                float frameRate = ffmpegHelper.GetVideoFrameRate($"{IOStore.tempFolder}/{file.filename}.avi");
                 Console.WriteLine(DateTime.Now + $"Video Frameate: {frameRate} fps");
 
+                // Get the bitrate of the WAV audio file
+                int audioBitrate = ffmpegHelper.GetAudioBitrate($"{IOStore.tempFolder}/{file.filename}.wav");
+                Console.WriteLine(DateTime.Now + $"Audio Bitrate: {audioBitrate} b/s");
+
                 // .avi, .wav, .txt, 885833, 129498, 24
-                convertInVideoEncoder(file.media, file.audio, file.txt, videoBitrate, audioBitrate, frameRate);
+                convertInVideoEncoder($"{IOStore.tempFolder}/{file.filename}.avi", $"{IOStore.tempFolder}/{file.filename}.wav", file.txt, videoBitrate, audioBitrate, frameRate);
             }
         }
 
         public void createPlaceHolderSubtitleFile()
         {
             // Specify the file path
-            string filePath = "assets/placeholder_subtitles.txt";
+            string filePath = $"{IOStore.tempFolder}/placeholder_subtitles.txt";
 
             // Check if the directory exists, if not, create it
             string directoryPath = Path.GetDirectoryName(filePath);
@@ -119,6 +123,18 @@ namespace USM_builder
             }
         }
 
+        public void createTempFolder()
+        {
+            // Specify the file path
+            string filePath = "usm_builder_temp/";
+            // Check if the directory exists, if not, create it
+            string directoryPath = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+        }
+
         /// <summary>
         /// Сборка avi + wav + txt файлов в .usm
         /// @todo проверить почему энкодеру не нравится формат сабов (возмонжо т.к. в конце строки есть NULLNULL)
@@ -131,7 +147,7 @@ namespace USM_builder
         {
             Console.WriteLine(DateTime.Now + " - Scaleform - внесение параметров...");
             var processStartInfo = new ProcessStartInfo();
-            var outputFile = IOStore.output + '/' + Path.GetFileNameWithoutExtension(videoFileName) + ".usm";
+            var outputFile = $"{IOStore.output}/{Path.GetFileNameWithoutExtension(videoFileName)}.usm";
             processStartInfo.FileName = IOStore.encoderPath;
             processStartInfo.Arguments = String.Format(
                 "-target=xboxone -h264_profile=high -hca=on -hca_quality=5 -video00=\"{0}\" -output=\"{1}\" -bitrate={2} {3} -framerate={4} -subtitle00=\"{6}\" -subtitle01=\"{5}\"", // -subtitle00 и -subtitle01 дублируются т.к. Scaleform video encoder не умеет записывать строго в 1 дорожку сабы, он пишет сначала в 0 потом в 1
@@ -140,8 +156,8 @@ namespace USM_builder
                 VideoBitrate,
                 audioFileName != null ? $"-audio00=\"{audioFileName}\"" : "",
                 Framerate,
-                subtitleFileName,
-                "assets/placeholder_subtitles.txt"
+                $"{IOStore.input}/{subtitleFileName}",
+                $"{IOStore.tempFolder}/placeholder_subtitles.txt"
                 );
             processStartInfo.UseShellExecute = false;
 
