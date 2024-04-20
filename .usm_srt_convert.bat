@@ -1,3 +1,5 @@
+@echo off
+title .usm_srt_convert
 setlocal enabledelayedexpansion
 
 ::set "folder_name=Story05_CG01"
