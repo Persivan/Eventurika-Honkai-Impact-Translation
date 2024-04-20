@@ -6,8 +6,11 @@
 Каждый синематик - это .usm файл.
 Все синематики можно просмотреть в игре "Телефон" -> "Collection" -> "Cutscenes". 
 
-# Программы
-**Экспортировать сабы из USM / Конвертировать сабы для будущей упаковки** - USM_subs_toolbox.exe - прога, использую [билд с гита](https://github.com/Devyatyi9/HI3rd_usm_sbt_patcher/releases/tag/test2). Размещена в корне проекта.
+# Вам потребуется
+.NET 8.0 - [можно скачать с офф сайта](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+
+# Описание программ в этой репозитории
+**Экспортировать сабы из USM / Конвертировать сабы для будущей упаковки** - USM_subs_toolbox.exe - прога, использую [билд с гита](https://github.com/Devyatyi9/HI3rd_usm_sbt_patcher/releases/tag/test2). Размещена в `/distr/`.
 
 **Конвертировать медиа после VGMToolBox** - ffmpeg, использую [билд отсюда](https://www.gyan.dev/ffmpeg/builds/). Размещена, где угодно. В скрипте указывается путь до нее.
 
