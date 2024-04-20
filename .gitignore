@@ -4,3 +4,4 @@
 /USM_Builder/USM_builder/Properties/launchSettings.json
 *.pdb
 USM_Builder/USM_builder/Properties/PublishProfiles/Publish Release.pubxml.user
+USM_Builder/USM_builder/Properties/PublishProfiles/Publish-Release.pubxml.user
