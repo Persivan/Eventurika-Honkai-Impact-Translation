@@ -2,3 +2,5 @@
 !.gitignore
 !USM_subs_toolbox.exe
 !USM_Builder
+/USM_Builder/*.pdb
+/USM_Builder/*.json
