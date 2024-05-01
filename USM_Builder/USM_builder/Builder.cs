@@ -9,7 +9,7 @@ namespace USM_builder
 {
     internal class Builder
     {
-        private string _currentDirectory = Directory.GetCurrentDirectory();
+        private string _currentDirectory = Directory.GetCurrentDirectory(); // помоему это не используется
         private List<FileNames> _fileNames = new List<FileNames>();     // @todo переписать под использованием типа FileNames
                                                                         // @todo чтобы была возможность использовать разные имена файлов
 
@@ -89,7 +89,7 @@ namespace USM_builder
                 Console.WriteLine(DateTime.Now + $"Video Bitrate: {videoBitrate} b/s");
 
                 // Get the bitrate of the AVI video file
-                float frameRate = ffmpegHelper.GetVideoFrameRate($"{IOStore.tempFolder}/{file.filename}.avi");
+                float frameRate = ffmpegHelper.GetVideoFrameRate($"{IOStore.tempFolder}/{file.filename}.avi"); // появляется красный текст: At least one output file must be specified
                 Console.WriteLine(DateTime.Now + $"Video Frameate: {frameRate} fps");
 
                 // Get the bitrate of the WAV audio file
@@ -146,8 +146,9 @@ namespace USM_builder
         private void convertInVideoEncoder(String videoFileName, String audioFileName, String subtitleFileName, int VideoBitrate, int AudioBitrate, float Framerate)
         {
             Console.WriteLine(DateTime.Now + " - Scaleform - внесение параметров...");
-            var processStartInfo = new ProcessStartInfo();
-            var outputFile = $"{IOStore.output}/{Path.GetFileNameWithoutExtension(videoFileName)}.usm";
+            ProcessStartInfo processStartInfo = new();
+            string outputFile = $"{IOStore.output}/{Path.GetFileNameWithoutExtension(videoFileName)}.usm";
+            Directory.CreateDirectory(IOStore.output); // medianocheH264 выдаёт ошибку на японском если путь вывода не существует
             processStartInfo.FileName = IOStore.encoderPath;
             processStartInfo.Arguments = String.Format(
                 "-target=xboxone -h264_profile=high -hca=on -hca_quality=5 -video00=\"{0}\" -output=\"{1}\" -bitrate={2} {3} -framerate={4} -subtitle00=\"{6}\" -subtitle01=\"{5}\"", // -subtitle00 и -subtitle01 дублируются т.к. Scaleform video encoder не умеет записывать строго в 1 дорожку сабы, он пишет сначала в 0 потом в 1

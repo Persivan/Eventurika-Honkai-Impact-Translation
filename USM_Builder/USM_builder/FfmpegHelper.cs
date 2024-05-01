@@ -79,7 +79,7 @@ namespace USM_builder
             {
                 FileName = ffmpegPath,
                 Arguments = command,
-                RedirectStandardError = true, // с включенным редиректом в вывод не попадает сообщение о перезаписи файла
+                RedirectStandardError = false, // с включенным редиректом в вывод не попадает сообщение о перезаписи файла
                 UseShellExecute = false
             };
 
@@ -88,8 +88,8 @@ namespace USM_builder
                 if (process != null)
                 {
                     process.WaitForExit();
-                    string output = process.StandardError.ReadToEnd();
-                    //string output = "aboba";
+                    //string output = process.StandardError.ReadToEnd();
+                    string output = "aboba"; // ffmpeg не работает корректно с включённым редиректом
                     return output;
                 }
                 else

@@ -13,7 +13,7 @@ int main()
     if (args.Length != 5 || args.Contains("-h") || args.Contains("-help"))
     {
         Console.WriteLine("Usage: USM_builder <input_directory> <ffmpeg_path> <ffprobe_path> <encoder_path> <output_directory>");
-        Console.WriteLine("Example: USM_builder \"input\" \"distr/ffmpeg/bin/ffmpeg.exe\" \"distr/ffmpeg/bin/ffprobe.exe\" \"distr/Scaleform VideoEncoder\" \"output\"");
+        Console.WriteLine("Example: USM_builder \"input\" \"distr/ffmpeg/bin/ffmpeg.exe\" \"distr/ffmpeg/bin/ffprobe.exe\" \"distr/Scaleform VideoEncoder/medianocheH264.exe\" \"output\"");
         return -1;
     }
 
@@ -21,6 +21,14 @@ int main()
     Environment.CurrentDirectory = "..\\..\\..\\..\\..\\";
     Console.WriteLine("Рабочая директория: \n" + Environment.CurrentDirectory);
 #endif
+
+#region IOStore
+    IOStore.tempFolder = Path.GetFullPath(IOStore.tempFolder);
+    IOStore.input = Path.GetFullPath(IOStore.input);
+    IOStore.output = Path.GetFullPath(IOStore.output);
+    IOStore.input = Path.TrimEndingDirectorySeparator(IOStore.input);
+    IOStore.output = Path.TrimEndingDirectorySeparator(IOStore.output);
+#endregion
 
     Builder builder = new Builder();
     if (builder.readFileNames(IOStore.input) == 0)          // Считываем названия файлов
