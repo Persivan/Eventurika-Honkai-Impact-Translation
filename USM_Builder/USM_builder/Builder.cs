@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -121,6 +122,9 @@ namespace USM_builder
                     int audioBitrate = ffmpegHelper.GetAudioBitrate($"{IOStore.tempFolder}/{file.filename}.wav");
                     Console.WriteLine(DateTime.Now + $"Audio Bitrate: {audioBitrate} b/s");
 
+                    // fix txt file (remove null characters)
+                    removeNullCharacters(file.txt);
+
                     // .avi, .wav, .txt, 885833, 129498, 24
                     convertInVideoEncoder($"{IOStore.tempFolder}/{file.filename}.avi", $"{IOStore.tempFolder}/{file.filename}.wav", file.txt, videoBitrate, audioBitrate, frameRate);
                 }
@@ -151,6 +155,14 @@ namespace USM_builder
                     convertInVideoEncoder($"{IOStore.tempFolder}/{file.filename}.avi", $"{IOStore.tempFolder}/{file.filename}.wav", "", videoBitrate, audioBitrate, frameRate);
                 }
             }
+        }
+
+        public void removeNullCharacters(String subtitleFileName)
+        {
+            string txtFilePath = $"{IOStore.input}/{subtitleFileName}";
+            string txtFile = File.ReadAllText(txtFilePath).Replace("\0","");
+            string outputFilePath = $"{IOStore.tempFolder}/{subtitleFileName}";
+            File.WriteAllTextAsync(outputFilePath, txtFile);
         }
 
         public void createPlaceHolderSubtitleFile()
@@ -211,7 +223,7 @@ namespace USM_builder
                 VideoBitrate,
                 audioFileName != null ? $"-audio00=\"{audioFileName}\"" : "",
                 Framerate,
-                $"{IOStore.input}/{subtitleFileName}",
+                $"{IOStore.tempFolder}/{subtitleFileName}",
                 $"{IOStore.tempFolder}/placeholder_subtitles.txt"
                 );
             } else {
