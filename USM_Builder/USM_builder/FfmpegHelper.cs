@@ -110,7 +110,7 @@ namespace USM_builder
 
         public string ConvertInFfmpeg(string videoFilePath, string audioFilePath, string outputVideoFilePath, string outputAudioFilePath)
         {
-            string command = $"-i \"{videoFilePath}\" -i \"{audioFilePath}\" \"{outputVideoFilePath}\" \"{outputAudioFilePath}\"";
+            string command = $"-i \"{videoFilePath}\" -i \"{audioFilePath}\" \"{outputVideoFilePath}\" \"{outputAudioFilePath}\" -y";
             string output = RunFFmpegCommand(command);
             // @todo если output вернул ошибку, надо кидать исключение
             return output;
