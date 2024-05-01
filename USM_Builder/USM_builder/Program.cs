@@ -14,7 +14,7 @@ int main()
     {
         Console.WriteLine("Usage: USM_builder <input_directory> <ffmpeg_path> <ffprobe_path> <encoder_path> <output_directory> (-doNotUseSubtitles)");
         Console.WriteLine("Example: USM_builder \"input\" \"distr/ffmpeg/bin/ffmpeg.exe\" \"distr/ffmpeg/bin/ffprobe.exe\" \"distr/Scaleform VideoEncoder/medianocheH264.exe\" \"output\" -doNotUseSubtitles");
-        Console.WriteLine("\"-doNotUseSubtitles\" is optional parametr");
+        Console.WriteLine("\"-doNotUseSubtitles\" is optional parameter for ignoring .txt files.");
         return -1;
     }
 
