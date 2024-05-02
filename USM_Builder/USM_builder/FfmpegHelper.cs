@@ -79,7 +79,7 @@ namespace USM_builder
             {
                 FileName = ffmpegPath,
                 Arguments = command,
-                RedirectStandardError = true, // с включенным редиректом в вывод не попадает сообщение о перезаписи файла
+                RedirectStandardError = false, // с включенным редиректом в вывод не попадает сообщение о перезаписи файла
                 UseShellExecute = false
             };
 
@@ -88,8 +88,8 @@ namespace USM_builder
                 if (process != null)
                 {
                     process.WaitForExit();
-                    string output = process.StandardError.ReadToEnd();
-                    //string output = "aboba";
+                    //string output = process.StandardError.ReadToEnd();
+                    string output = "aboba"; // ffmpeg не работает корректно с включённым редиректом
                     return output;
                 }
                 else
@@ -110,7 +110,7 @@ namespace USM_builder
 
         public string ConvertInFfmpeg(string videoFilePath, string audioFilePath, string outputVideoFilePath, string outputAudioFilePath)
         {
-            string command = $"-i \"{videoFilePath}\" -i \"{audioFilePath}\" \"{outputVideoFilePath}\" \"{outputAudioFilePath}\"";
+            string command = $"-i \"{videoFilePath}\" -i \"{audioFilePath}\" \"{outputVideoFilePath}\" \"{outputAudioFilePath}\" -y";
             string output = RunFFmpegCommand(command);
             // @todo если output вернул ошибку, надо кидать исключение
             return output;
