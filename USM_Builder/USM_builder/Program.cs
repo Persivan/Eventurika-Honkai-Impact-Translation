@@ -10,7 +10,7 @@ int main()
 {
     Console.OutputEncoding = System.Text.Encoding.UTF8;
     // Проверка параметров запуска
-    if ((args.Length < 5 || args.Length > 6) || args.Contains("-h") || args.Contains("-help"))
+    if ((args.Length < 5 || args.Length > 6) || args.Contains("-h") || args.Contains("-help") || args.Contains(String.Empty))
     {
         Console.WriteLine("Usage: USM_builder <input_directory> <ffmpeg_path> <ffprobe_path> <encoder_path> <output_directory> (-doNotUseSubtitles)");
         Console.WriteLine("Example: USM_builder \"input\" \"distr/ffmpeg/bin/ffmpeg.exe\" \"distr/ffmpeg/bin/ffprobe.exe\" \"distr/Scaleform VideoEncoder/medianocheH264.exe\" \"output\" -doNotUseSubtitles");
