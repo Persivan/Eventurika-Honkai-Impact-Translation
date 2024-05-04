@@ -56,17 +56,21 @@ namespace USM_builder
                 }
                 // Проверяем, существует ли соответствующий файл .txt, при успехе добавляем в список
                 // при неудаче, сообщаем пользователю. Уже пользователь решает, что делать с этим файлом
-                if (!IOStore.doNotUseSubtitles && txtBaseNames.Contains(mp4BaseName + "_en"))
+                if (!IOStore.doNotUseSubtitles)
                 {
-                    // @todo убрать "_en.txt", как минимум стоит сделать выбор испольщовать приписку "_en" или нет
-                    _fileNames.Add(new FileNames(mp4BaseName, mp4BaseName + ".avi", mp4BaseName + "_en.txt", mp4BaseName + ".wav"));
+                    if (txtBaseNames.Contains(mp4BaseName + "_en"))
+                    {
+                        _fileNames.Add(new FileNames(mp4BaseName, mp4BaseName + ".avi", mp4BaseName + "_en.txt", mp4BaseName + ".wav"));
+                    } else if (txtBaseNames.Contains(mp4BaseName))
+                    {
+                        _fileNames.Add(new FileNames(mp4BaseName, mp4BaseName + ".avi", mp4BaseName + ".txt", mp4BaseName + ".wav"));
+                    }
                 } else {
                     Console.WriteLine($"Файл субтитров для '{filePath}/{mp4BaseName}.avi' не найден");
                 }
                 if (IOStore.doNotUseSubtitles)
                 {
-                    // режим без субтитров активирован
-                    // @todo убрать "_en.txt", как минимум стоит сделать выбор испольщовать приписку "_en" или нет
+                    // без субтитров
                     _fileNamesNoSbt.Add(new FileNamesNoSbt(mp4BaseName, mp4BaseName + ".avi", mp4BaseName + ".wav"));
                 }
             }
