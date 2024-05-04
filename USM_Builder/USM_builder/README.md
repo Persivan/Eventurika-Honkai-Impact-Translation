@@ -14,4 +14,4 @@
 Для генерации одного .usm файла в папке "input" должно быть 3 файла
 1. FILENAME.avi - видео
 2. FILENAME.wav - аудио
-3. FILENAME_en.txt - сабы
+3. FILENAME_en.txt/FILENAME.txt - сабы
