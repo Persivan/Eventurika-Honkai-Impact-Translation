@@ -73,24 +73,24 @@ namespace USM_builder
             throw new Exception("Bitrate not found in ffprobe output.");
         }
 
-        private string RunFFmpegCommand(string command)
+        private void RunFFmpegCommand(string command)
         {
             ProcessStartInfo processStartInfo = new ProcessStartInfo
             {
                 FileName = ffmpegPath,
                 Arguments = command,
-                RedirectStandardError = false, // с включенным редиректом в вывод не попадает сообщение о перезаписи файла
-                UseShellExecute = false
+                RedirectStandardOutput = false, // с включенным редиректом в вывод не попадает сообщение о перезаписи файла
+                UseShellExecute = false,
+                CreateNoWindow = true
             };
-
             using (Process process = Process.Start(processStartInfo))
             {
                 if (process != null)
                 {
                     process.WaitForExit();
-                    //string output = process.StandardError.ReadToEnd();
-                    string output = "aboba"; // ffmpeg не работает корректно с включённым редиректом
-                    return output;
+                    //string output = process.StandardOutput.ReadToEnd();
+                    //string output = "aboba"; // ffmpeg не работает корректно с включённым редиректом
+                    //return output;
                 }
                 else
                 {
@@ -101,19 +101,21 @@ namespace USM_builder
 
         public float GetVideoFrameRate(string videoFilePath)
         {
-            string command = $"-i \"{videoFilePath}\"";
-            string output = RunFFmpegCommand(command);
+            // -v error -select_streams v:0 -show_entries stream=avg_frame_rate -of default=noprint_wrappers=1:nokey=1
+            string command = $"-v error -select_streams v:0 -show_entries stream=avg_frame_rate -of default=noprint_wrappers=1:nokey=1 \"{videoFilePath}\"";
+            string output = RunFFprobeCommand(command);
             // Parsing the output to find the frame rate
-            float frameRate = ParseFrameRate(output);
+            float frameRate = NewParseFrameRate(output);
             return frameRate;
         }
 
-        public string ConvertInFfmpeg(string videoFilePath, string audioFilePath, string outputVideoFilePath, string outputAudioFilePath)
+        public void ConvertInFfmpeg(string videoFilePath, string audioFilePath, string outputVideoFilePath, string outputAudioFilePath)
         {
-            string command = $"-i \"{videoFilePath}\" -i \"{audioFilePath}\" \"{outputVideoFilePath}\" \"{outputAudioFilePath}\" -y";
-            string output = RunFFmpegCommand(command);
+            string command = $"-i \"{videoFilePath}\" -i \"{audioFilePath}\" \"{outputVideoFilePath}\" \"{outputAudioFilePath}\" -y -threads auto -preset slow";
+            RunFFmpegCommand(command);
             // @todo если output вернул ошибку, надо кидать исключение
-            return output;
+            //string output = "pepega";
+            //return output;
         }
 
         private float ParseFrameRate(string output)
@@ -142,6 +144,18 @@ namespace USM_builder
 
             // Return a default value if frame rate extraction fails
             return -1;
+        }
+
+        private int NewParseFrameRate(string output)
+        {
+            int frameRate;
+            if (!string.IsNullOrEmpty(output) && !String.Equals(output, '0'))
+            {
+                string[] fpsSplit = output.Split('/');
+                float floatFps = float.Parse(fpsSplit[0] + ',' + fpsSplit[1]);
+                frameRate = (int)Math.Round(floatFps, MidpointRounding.AwayFromZero);
+            } else { frameRate = 0; }
+            return frameRate;
         }
     }
 

@@ -100,7 +100,7 @@ namespace USM_builder
                 return;
             }
 
-            Console.WriteLine(DateTime.Now + " - Передаем файлы в Scaleform...");
+            Console.WriteLine(DateTime.Now + " - Подготавливаем файлы для Scaleform...");
 
             int counter = 0;
             if (!IOStore.doNotUseSubtitles)
@@ -116,15 +116,15 @@ namespace USM_builder
 
                     // Get the bitrate of the AVI video file
                     int videoBitrate = ffmpegHelper.GetVideoBitrate($"{IOStore.tempFolder}/{file.filename}.avi");
-                    Console.WriteLine(DateTime.Now + $"Video Bitrate: {videoBitrate} b/s");
+                    Console.WriteLine(DateTime.Now + $" - Video Bitrate: {videoBitrate} b/s");
 
                     // Get the bitrate of the AVI video file
                     float frameRate = ffmpegHelper.GetVideoFrameRate($"{IOStore.tempFolder}/{file.filename}.avi"); // появляется красный текст: At least one output file must be specified
-                    Console.WriteLine(DateTime.Now + $"Video Frameate: {frameRate} fps");
+                    Console.WriteLine(DateTime.Now + $" - Video Frameate: {frameRate} fps");
 
                     // Get the bitrate of the WAV audio file
                     int audioBitrate = ffmpegHelper.GetAudioBitrate($"{IOStore.tempFolder}/{file.filename}.wav");
-                    Console.WriteLine(DateTime.Now + $"Audio Bitrate: {audioBitrate} b/s");
+                    Console.WriteLine(DateTime.Now + $" - Audio Bitrate: {audioBitrate} b/s");
 
                     // fix txt file (remove null characters)
                     removeNullCharacters(file.txt);
@@ -145,15 +145,15 @@ namespace USM_builder
 
                     // Get the bitrate of the AVI video file
                     int videoBitrate = ffmpegHelper.GetVideoBitrate($"{IOStore.tempFolder}/{file.filename}.avi");
-                    Console.WriteLine(DateTime.Now + $"Video Bitrate: {videoBitrate} b/s");
+                    Console.WriteLine(DateTime.Now + $" - Video Bitrate: {videoBitrate} b/s");
 
                     // Get the bitrate of the AVI video file
                     float frameRate = ffmpegHelper.GetVideoFrameRate($"{IOStore.tempFolder}/{file.filename}.avi"); // появляется красный текст: At least one output file must be specified
-                    Console.WriteLine(DateTime.Now + $"Video Frameate: {frameRate} fps");
+                    Console.WriteLine(DateTime.Now + $" - Video Frameate: {frameRate} fps");
 
                     // Get the bitrate of the WAV audio file
                     int audioBitrate = ffmpegHelper.GetAudioBitrate($"{IOStore.tempFolder}/{file.filename}.wav");
-                    Console.WriteLine(DateTime.Now + $"Audio Bitrate: {audioBitrate} b/s");
+                    Console.WriteLine(DateTime.Now + $" - Audio Bitrate: {audioBitrate} b/s");
 
                     // .avi, .wav, "", 885833, 129498, 24
                     convertInVideoEncoder($"{IOStore.tempFolder}/{file.filename}.avi", $"{IOStore.tempFolder}/{file.filename}.wav", "", videoBitrate, audioBitrate, frameRate);
@@ -213,7 +213,7 @@ namespace USM_builder
         /// <param name="videoInfo"></param>
         private void convertInVideoEncoder(String videoFileName, String audioFileName, String subtitleFileName, int VideoBitrate, int AudioBitrate, float Framerate)
         {
-            Console.WriteLine(DateTime.Now + " - Scaleform - внесение параметров...");
+            Console.WriteLine(DateTime.Now + " - Scaleform - внесение параметров для конвертации...");
             ProcessStartInfo processStartInfo = new();
             string outputFile = $"{IOStore.output}/{Path.GetFileNameWithoutExtension(videoFileName)}.usm";
             Directory.CreateDirectory(IOStore.output); // medianocheH264 выдаёт ошибку на японском если путь вывода не существует
