@@ -131,6 +131,9 @@ namespace USM_builder
 
                     // .avi, .wav, .txt, 885833, 129498, 24
                     convertInVideoEncoder($"{IOStore.tempFolder}/{file.filename}.avi", $"{IOStore.tempFolder}/{file.filename}.wav", file.txt, videoBitrate, audioBitrate, frameRate);
+
+                    // Deleting unnecessary files
+                    removeTempFiles($"{file.filename}.avi", $"{file.filename}.wav", file.txt);
                 }
             } else
             {
@@ -157,6 +160,9 @@ namespace USM_builder
 
                     // .avi, .wav, "", 885833, 129498, 24
                     convertInVideoEncoder($"{IOStore.tempFolder}/{file.filename}.avi", $"{IOStore.tempFolder}/{file.filename}.wav", "", videoBitrate, audioBitrate, frameRate);
+
+                    // Deleting unnecessary files
+                    removeTempFiles($"{file.filename}.avi", $"{file.filename}.wav", "");
                 }
             }
         }
@@ -201,6 +207,15 @@ namespace USM_builder
             {
                 Directory.CreateDirectory(directoryPath);
             }
+        }
+
+        public void removeTempFiles(string video, string audio, string txt)
+        {
+            File.Delete($"{IOStore.tempFolder}/{video}");
+            File.Delete($"{IOStore.tempFolder}/{audio}");
+            if (txt != "")
+                File.Delete($"{IOStore.tempFolder}/{txt}");
+            Console.WriteLine(DateTime.Now + " - удалены временные файлы для " + $"{Path.GetFileNameWithoutExtension(video)}");
         }
 
         /// <summary>
