@@ -6,3 +6,5 @@ USM_Builder/USM_builder/Properties/PublishProfiles/Publish-Release.pubxml.user
 srt
 .usm_build — devyatyi9.bat
 /USM_Builder/USM_builder/USM_builder.csproj.user
+.vs
+logs

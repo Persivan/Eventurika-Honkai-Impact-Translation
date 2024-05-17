@@ -9,6 +9,12 @@
 # Вам потребуется
 .NET 8.0 - [можно скачать с офф сайта](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 
+Net framework 3.5 - для работы Scaleform VideoEncoder
+
+DirectX 9 - для работы Scaleform VideoEncoder [можно скачать с офф сайта](https://www.microsoft.com/ru-ru/download/details.aspx?id=35)
+
+Scaleform VideoEncoder - для сборки USM файлов [можно тут](https://www.nexusmods.com/witcher3/mods/3505?tab=files&file_id=37515)
+
 # Описание программ в этой репозитории
 **Экспортировать сабы из USM / Конвертировать сабы для будущей упаковки** - USM_subs_toolbox.exe - прога, использую [билд с гита](https://github.com/Devyatyi9/HI3rd_usm_sbt_patcher/releases/tag/test2). Размещена в `/distr/`.
 
@@ -44,11 +50,12 @@
 В этой же папке будет создана два файла: `Story05_CG01_40534656.m2v` и `Story05_CG01_40534641.hca`. m2v - видео-дорожка. hca - аудио-дорожка.
 9. Переносим эти файлы (`Story05_CG01_40534656.m2v` и `Story05_CG01_40534641.hca`) в папку `usm_builder_input`.
 10. Переименовываем эти файлы, убираем мусор из названия (`Story05_CG01.m2v` и `Story05_CG01.hca`).
-11. На этом этапе в папке `usm_builder_input` можно размещать множество файлов. Для создания одного .usm файла в папке `usm_builder_input` должно быть 3 файла
+![mstsc_uesY7aFNJP](https://github.com/Persivan/Eventurika-Honkai-Impact-Translation/assets/39733368/b2964613-91a6-4d4d-988a-ca5dbe0bf4a6)
+12. На этом этапе в папке `usm_builder_input` можно размещать множество файлов. Для создания одного .usm файла в папке `usm_builder_input` должно быть 3 файла
     * FILENAME.m2v - видео (`Story05_CG01.m2v`)
     * FILENAME.hca - аудио (`Story05_CG01.hca`)
     * FILENAME_en.txt - сабы (`Story05_CG01_en.txt`)
-12. В файле `.start_usm_builder.bat` меняем
+13. В файле `.start_usm_builder.bat` меняем
 `./USM_Builder.exe "usm_builder_input" "distr/ffmpeg/bin/ffmpeg.exe" "distr/ffmpeg/bin/ffprobe.exe" "distr/Scaleform VideoEncoder/medianocheH264.exe" "usm_builder_output" "distr/USM_subs_toolbox.exe"`
 * "usm_builder_input" - путь до папки с файлами .avi (видео), .txt (субтитры), .wav (аудио)
 * "distr/ffmpeg/bin/ffmpeg.exe" - путь до ffmpeg.exe
@@ -76,9 +83,19 @@
 # Скрипты
 Написал скрипт `.usm_srt_extract.bat` - достает из usm файла сабы
 1. Помещаем файл из `BH3_Data\StreamingAssets\Video` в `./usm_videos/`
-2. В строке `set "folder_name=6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a"` изменяем название файла
+2. Вводим путь к файлу при запуске скрипта ИЛИ вводим название файла внутри скрипта
+  1. Указываем путь - ничего не трогаем, просто запускаем скрипт
+  2. В строке `set "folder_name=6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a"` изменяем название файла. Убираем из этой строки `::`, добавляем в строку ниже, чтобы получилось `::set /p "folder_name=Enter file name (ex: Story05_CG01): "`
 3. Запускаем скрипт
 Достанет 0-7 дорожки сабов в папку `./srt/6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a/`, лог в `./logs/6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a/`
+
+Написал скрипт `.usm_srt_extract_en_.bat` - достает из usm файла англ сабы
+1. Помещаем файл из `BH3_Data\StreamingAssets\Video` в `./usm_videos/`
+2. Вводим путь к файлу при запуске скрипта ИЛИ вводим название файла внутри скрипта
+  1. Указываем путь - ничего не трогаем, просто запускаем скрипт
+  2. В строке `set "folder_name=6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a"` изменяем название файла. Убираем из этой строки `::`, добавляем в строку ниже, чтобы получилось `::set /p "folder_name=Enter file name (ex: Story05_CG01): "`
+3. Запускаем скрипт
+Достанет 1 дорожку сабов в папку `./srt/6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a/`, лог в `./logs/6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a/`
 
 Написал скрипт `.usm_srt_convert.bat` - конвертирует формат сабов. Перед запуском требуется запустить extract.bat, чтобы он создал файлы .srt
 1. В строке `set "folder_name=6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a"` изменяем название файла
@@ -89,6 +106,9 @@
 Все usm файлы надо хранить в `./usm_videos`. USM_subs_toolbox иначе не работает. Запуск в таком случае `Test.exe -extractSbt "usm_videos/kiana.usm" -l 4`. файл с сабами будет лежать в usm_videos/kiana.srt. Иначе будет ошибка: `Error : [file_open,null/test.srt]`
 ## Индекс сабов
 В некоторых файлах нет англ сабов (1 индекс), т.к. на экране буквально англ текст. После сборки подобных файлов мы все равно не получим сабы на экране
+## Оригинальные синематики
+До версии 5.8 (вроде в 5.9 произошел переход на .usm формат) использовались mp4 файлы. Их битрейт намного выше (качество выше), поэтому рекомендую использовать их для сборки синематиков до версии игры 5.9.
+[ссылка на гугл драйв с архивом и списком файлов](https://drive.google.com/drive/folders/1KXjpJt8EKiXeQ861SxNjN3docMgXwbRY?usp=drive_link)1
 
 # Языки
 Файл `usm_videos/7.1_Birthday_Kiana_21f3d1f775e2938ac9c205e53d88bd82.usm`
