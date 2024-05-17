@@ -100,8 +100,8 @@ namespace USM_builder
         }
 
         public float GetVideoFrameRate(string videoFilePath)
-        {
-            string command = $"-v error -select_streams v:0 -show_entries stream=avg_frame_rate -of default=noprint_wrappers=1:nokey=1 \"{videoFilePath}\"";
+        {// r_frame_rate,avg_frame_rate
+            string command = $"-v error -select_streams v:0 -show_entries stream=r_frame_rate -of default=noprint_wrappers=1:nokey=1 \"{videoFilePath}\"";
             string output = RunFFprobeCommand(command);
             // Parsing the output to find the frame rate
             float frameRate = NewParseFrameRate(output);
