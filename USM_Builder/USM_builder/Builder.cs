@@ -21,7 +21,7 @@ namespace USM_builder
         /// Если такой файл НЕ найден, то об этом будет сообщено пользователю
         /// </summary>
         /// <param name="filePath"></param>
-        public int readFileNames(string filePath)
+        public int ReadFileNames(string filePath)
         {
 #if DEBUG
             Console.WriteLine("Do Not Use Subtitles: " + IOStore.doNotUseSubtitles);
@@ -96,7 +96,7 @@ namespace USM_builder
         /// @todo убрать хардкод и сделать обработку _fileNames
         /// </summary>
         /// <param name="videoInfo"></param>
-        public void encodeAll()
+        public void EncodeAll()
         {
             if ((_fileNames.Count == 0 && !IOStore.doNotUseSubtitles) || (_fileNamesNoSbt.Count == 0 && IOStore.doNotUseSubtitles))
             {
@@ -136,13 +136,13 @@ namespace USM_builder
                     Logger.WriteLine($"Audio Bitrate: {audioBitrate} b/s");
 
                     // fix txt file (remove null characters)
-                    removeNullCharacters(file.txt);
+                    RemoveNullCharacters(file.txt);
 
                     // .avi, .wav, .txt, 885833, 129498, 24
-                    convertInVideoEncoder($"{IOStore.tempFolder}/{file.filename}.avi", $"{IOStore.tempFolder}/{file.filename}.wav", file.txt, videoBitrate, audioBitrate, frameRate);
+                    ConvertInVideoEncoder($"{IOStore.tempFolder}/{file.filename}.avi", $"{IOStore.tempFolder}/{file.filename}.wav", file.txt, videoBitrate, audioBitrate, frameRate);
 
                     // Deleting unnecessary files
-                    removeTempFiles($"{file.filename}.avi", $"{file.filename}.wav", file.txt);
+                    RemoveTempFiles($"{file.filename}.avi", $"{file.filename}.wav", file.txt);
                 }
             }
             else
@@ -172,15 +172,15 @@ namespace USM_builder
                     Logger.WriteLine($"Audio Bitrate: {audioBitrate} b/s");
 
                     // .avi, .wav, "", 885833, 129498, 24
-                    convertInVideoEncoder($"{IOStore.tempFolder}/{file.filename}.avi", $"{IOStore.tempFolder}/{file.filename}.wav", "", videoBitrate, audioBitrate, frameRate);
+                    ConvertInVideoEncoder($"{IOStore.tempFolder}/{file.filename}.avi", $"{IOStore.tempFolder}/{file.filename}.wav", "", videoBitrate, audioBitrate, frameRate);
 
                     // Deleting unnecessary files
-                    removeTempFiles($"{file.filename}.avi", $"{file.filename}.wav", "");
+                    RemoveTempFiles($"{file.filename}.avi", $"{file.filename}.wav", "");
                 }
             }
         }
 
-        public void removeNullCharacters(String subtitleFileName)
+        public void RemoveNullCharacters(String subtitleFileName)
         {
             string txtFilePath = $"{IOStore.inputFolder}/{subtitleFileName}";
             string txtFile = File.ReadAllText(txtFilePath).Replace("\0", "");
@@ -188,7 +188,7 @@ namespace USM_builder
             File.WriteAllTextAsync(outputFilePath, txtFile);
         }
 
-        public void createPlaceHolderSubtitleFile()
+        public void CreatePlaceHolderSubtitleFile()
         {
             // Specify the file path
             string filePath = $"{IOStore.tempFolder}/placeholder_subtitles.txt";
@@ -215,7 +215,7 @@ namespace USM_builder
         /// Создает папку если она не существует
         /// </summary>
         /// <param name="filePath"></param>
-        public void createFolder(string filePath)
+        public void CreateFolder(string filePath)
         {
             // Check if the directory exists, if not, create it
             string directoryPath = Path.GetDirectoryName(filePath);
@@ -225,7 +225,7 @@ namespace USM_builder
             }
         }
 
-        public void removeTempFiles(string video, string audio, string txt)
+        public void RemoveTempFiles(string video, string audio, string txt)
         {
             File.Delete($"{IOStore.tempFolder}/{video}");
             File.Delete($"{IOStore.tempFolder}/{audio}");
@@ -242,7 +242,7 @@ namespace USM_builder
         /// <param name="audioFileName"></param>
         /// <param name="subtitleFileName"></param>
         /// <param name="videoInfo"></param>
-        private void convertInVideoEncoder(String videoFileName, String audioFileName, String subtitleFileName, int VideoBitrate, int AudioBitrate, float Framerate)
+        private void ConvertInVideoEncoder(String videoFileName, String audioFileName, String subtitleFileName, int VideoBitrate, int AudioBitrate, float Framerate)
         {
             Logger.WriteLine("Scaleform - внесение параметров для конвертации...");
             ProcessStartInfo processStartInfo = new();

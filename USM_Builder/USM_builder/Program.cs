@@ -4,9 +4,9 @@ using System.Text;
 using USM_builder;  // Для получения доступа к VideoInfo
 using static System.Net.Mime.MediaTypeNames;
 
-main();
+Main();
 
-int main()
+int Main()
 {
     // Смена стандартной кодировки, чтобы на англоязычных системах выводились кириллица (иначе будет "???? ?? ??" вместо "ужас да да")
     Console.OutputEncoding = System.Text.Encoding.UTF8;
@@ -30,7 +30,7 @@ int main()
     IOStore.Initialize(args);
 
     Builder builder = new();
-    if (builder.readFileNames(IOStore.inputFolder) == 0)          // Считываем названия файлов
+    if (builder.ReadFileNames(IOStore.inputFolder) == 0)          // Считываем названия файлов
     {
         Console.WriteLine("Файлы не найдены");
         return 0;
@@ -38,11 +38,11 @@ int main()
 
     if (!IOStore.doNotUseSubtitles)
     {
-        builder.createPlaceHolderSubtitleFile();            // Создание файла если не существует
+        builder.CreatePlaceHolderSubtitleFile();            // Создание файла если не существует
     }
-    builder.createFolder("usm_builder_temp/");              // Создание папки если не существует
-    builder.createFolder(IOStore.outputFolder);                   // Создание папки если не существует
-    builder.encodeAll();                                    // Собираем в usm
+    builder.CreateFolder("usm_builder_temp/");              // Создание папки если не существует
+    builder.CreateFolder(IOStore.outputFolder);                   // Создание папки если не существует
+    builder.EncodeAll();                                    // Собираем в usm
     Console.WriteLine("Папку \"usm_builder_temp\" можете удалять.");
 
     return 0;
