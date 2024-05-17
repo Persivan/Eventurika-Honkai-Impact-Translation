@@ -3,7 +3,7 @@ title .usm_srt_extract
 setlocal enabledelayedexpansion
 
 ::set "folder_name=Story05_CG01"
-set /p "folder_name=Enter file name (Story05_CG01): "
+set /p "folder_name=Enter file name (ex: Story05_CG01): "
 set "srt_folder=srt/%folder_name%"
 set "log_folder=logs/%folder_name%"
 

@@ -83,9 +83,19 @@ Scaleform VideoEncoder - для сборки USM файлов [можно тут
 # Скрипты
 Написал скрипт `.usm_srt_extract.bat` - достает из usm файла сабы
 1. Помещаем файл из `BH3_Data\StreamingAssets\Video` в `./usm_videos/`
-2. В строке `set "folder_name=6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a"` изменяем название файла
+2. Вводим путь к файлу при запуске скрипта ИЛИ вводим название файла внутри скрипта
+  1. Указываем путь - ничего не трогаем, просто запускаем скрипт
+  2. В строке `set "folder_name=6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a"` изменяем название файла. Убираем из этой строки `::`, добавляем в строку ниже, чтобы получилось `::set /p "folder_name=Enter file name (ex: Story05_CG01): "`
 3. Запускаем скрипт
 Достанет 0-7 дорожки сабов в папку `./srt/6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a/`, лог в `./logs/6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a/`
+
+Написал скрипт `.usm_srt_extract_en_.bat` - достает из usm файла англ сабы
+1. Помещаем файл из `BH3_Data\StreamingAssets\Video` в `./usm_videos/`
+2. Вводим путь к файлу при запуске скрипта ИЛИ вводим название файла внутри скрипта
+  1. Указываем путь - ничего не трогаем, просто запускаем скрипт
+  2. В строке `set "folder_name=6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a"` изменяем название файла. Убираем из этой строки `::`, добавляем в строку ниже, чтобы получилось `::set /p "folder_name=Enter file name (ex: Story05_CG01): "`
+3. Запускаем скрипт
+Достанет 1 дорожку сабов в папку `./srt/6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a/`, лог в `./logs/6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a/`
 
 Написал скрипт `.usm_srt_convert.bat` - конвертирует формат сабов. Перед запуском требуется запустить extract.bat, чтобы он создал файлы .srt
 1. В строке `set "folder_name=6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a"` изменяем название файла

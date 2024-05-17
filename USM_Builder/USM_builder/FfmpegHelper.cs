@@ -145,16 +145,25 @@ namespace USM_builder
             return -1;
         }
 
-        private int NewParseFrameRate(string output)
+        private float NewParseFrameRate(string output)
         {
-            int frameRate;
-            if (!string.IsNullOrEmpty(output) && !String.Equals(output, '0'))
+            // Trim the string to remove any extraneous characters like \r and \n
+            string cleanedOutput = output.Trim();
+
+            // Split the cleaned string on the '/' character
+            string[] parts = cleanedOutput.Split('/');
+
+            // Convert the numerator and denominator to integers
+            if (parts.Length == 2 && int.TryParse(parts[0], out int numerator) && int.TryParse(parts[1], out int denominator))
             {
-                string[] fpsSplit = output.Split('/');
-                float floatFps = float.Parse(fpsSplit[0] + ',' + fpsSplit[1]);
-                frameRate = (int)Math.Round(floatFps, MidpointRounding.AwayFromZero);
-            } else { frameRate = 0; }
-            return frameRate;
+                // Calculate the float frame rate
+                return (float)numerator / denominator;
+            }
+            else
+            {
+                Logger.WriteLine("Ошибка - код 04, сообщите разработчикам");
+                throw new FormatException("Invalid ffprobe output format");
+            }
         }
     }
 
