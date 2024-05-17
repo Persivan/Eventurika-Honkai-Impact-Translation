@@ -8,6 +8,8 @@
 
 # Вам потребуется
 .NET 8.0 - [можно скачать с офф сайта](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+Net framework 3.5 - для работы Scaleform VideoEncoder
+Scaleform VideoEncoder - для сборки USM файлов [можно тут](https://www.nexusmods.com/witcher3/mods/3505?tab=files&file_id=37515)
 
 # Описание программ в этой репозитории
 **Экспортировать сабы из USM / Конвертировать сабы для будущей упаковки** - USM_subs_toolbox.exe - прога, использую [билд с гита](https://github.com/Devyatyi9/HI3rd_usm_sbt_patcher/releases/tag/test2). Размещена в `/distr/`.
