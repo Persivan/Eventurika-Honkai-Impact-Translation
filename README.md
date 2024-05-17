@@ -8,8 +8,11 @@
 
 # Вам потребуется
 .NET 8.0 - [можно скачать с офф сайта](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+
 Net framework 3.5 - для работы Scaleform VideoEncoder
+
 DirectX 9 - для работы Scaleform VideoEncoder [можно скачать с офф сайта](https://www.microsoft.com/ru-ru/download/details.aspx?id=35)
+
 Scaleform VideoEncoder - для сборки USM файлов [можно тут](https://www.nexusmods.com/witcher3/mods/3505?tab=files&file_id=37515)
 
 # Описание программ в этой репозитории
