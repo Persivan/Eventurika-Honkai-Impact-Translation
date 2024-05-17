@@ -108,9 +108,9 @@ namespace USM_builder
             return frameRate;
         }
 
-        public void ConvertInFfmpeg(string videoFilePath, string audioFilePath, string outputVideoFilePath, string outputAudioFilePath)
+        public void ConvertInFfmpeg(string videoFilePath, string audioFilePath, string outputVideoFilePath, string outputAudioFilePath, float framerate)
         {
-            string command = $"-i \"{videoFilePath}\" -i \"{audioFilePath}\" \"{outputVideoFilePath}\" \"{outputAudioFilePath}\" -y -threads auto -preset slow";
+            string command = $"-i \"{videoFilePath}\" -i \"{audioFilePath}\" -c:v copy -r {framerate} \"{outputVideoFilePath}\" \"{outputAudioFilePath}\" -y";
             RunFFmpegCommand(command);
             // @todo если output вернул ошибку, надо кидать исключение
             //string output = "pepega";
