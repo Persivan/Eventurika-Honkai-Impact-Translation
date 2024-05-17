@@ -50,11 +50,12 @@ Scaleform VideoEncoder - для сборки USM файлов [можно тут
 В этой же папке будет создана два файла: `Story05_CG01_40534656.m2v` и `Story05_CG01_40534641.hca`. m2v - видео-дорожка. hca - аудио-дорожка.
 9. Переносим эти файлы (`Story05_CG01_40534656.m2v` и `Story05_CG01_40534641.hca`) в папку `usm_builder_input`.
 10. Переименовываем эти файлы, убираем мусор из названия (`Story05_CG01.m2v` и `Story05_CG01.hca`).
-11. На этом этапе в папке `usm_builder_input` можно размещать множество файлов. Для создания одного .usm файла в папке `usm_builder_input` должно быть 3 файла
+![mstsc_uesY7aFNJP](https://github.com/Persivan/Eventurika-Honkai-Impact-Translation/assets/39733368/b2964613-91a6-4d4d-988a-ca5dbe0bf4a6)
+12. На этом этапе в папке `usm_builder_input` можно размещать множество файлов. Для создания одного .usm файла в папке `usm_builder_input` должно быть 3 файла
     * FILENAME.m2v - видео (`Story05_CG01.m2v`)
     * FILENAME.hca - аудио (`Story05_CG01.hca`)
     * FILENAME_en.txt - сабы (`Story05_CG01_en.txt`)
-12. В файле `.start_usm_builder.bat` меняем
+13. В файле `.start_usm_builder.bat` меняем
 `./USM_Builder.exe "usm_builder_input" "distr/ffmpeg/bin/ffmpeg.exe" "distr/ffmpeg/bin/ffprobe.exe" "distr/Scaleform VideoEncoder/medianocheH264.exe" "usm_builder_output" "distr/USM_subs_toolbox.exe"`
 * "usm_builder_input" - путь до папки с файлами .avi (видео), .txt (субтитры), .wav (аудио)
 * "distr/ffmpeg/bin/ffmpeg.exe" - путь до ffmpeg.exe
