@@ -218,7 +218,7 @@ namespace USM_builder
         public void CreateFolder(string filePath)
         {
             // Check if the directory exists, if not, create it
-            string directoryPath = Path.GetDirectoryName(filePath);
+            string directoryPath = Path.GetFullPath(filePath);
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
