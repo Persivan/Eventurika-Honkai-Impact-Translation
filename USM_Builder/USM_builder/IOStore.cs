@@ -11,11 +11,11 @@ namespace USM_builder
     /// </summary>
     internal class IOStore
     {
-        public static string input;
+        public static string inputFolder;
         public static string ffmpegPath;
         public static string ffprobePath;
         public static string encoderPath;
-        public static string output;
+        public static string outputFolder;
         public static string tempFolder = "usm_builder_temp";
         public static bool doNotUseSubtitles = false;
 
@@ -23,14 +23,14 @@ namespace USM_builder
         {
             if (args.Length >= 5)
             {
-                input = Path.GetFullPath(args[0]);
+                inputFolder = Path.GetFullPath(args[0]);
                 ffmpegPath = args[1];
                 ffprobePath = args[2];
                 encoderPath = args[3];
-                output = Path.GetFullPath(args[4]);
+                outputFolder = Path.GetFullPath(args[4]);
 
-                input = Path.TrimEndingDirectorySeparator(input);
-                output = Path.TrimEndingDirectorySeparator(output);
+                inputFolder = Path.TrimEndingDirectorySeparator(inputFolder);
+                outputFolder = Path.TrimEndingDirectorySeparator(outputFolder);
 
                 if (args.Length == 6 && args[5] == "-doNotUseSubtitles")
                 {

@@ -115,17 +115,17 @@ namespace USM_builder
                     // Create an instance of FfmpegHelper
                     FfmpegHelper ffmpegHelper = new(IOStore.ffmpegPath, IOStore.ffprobePath);
 
-                    // Получаем битрейт m2v файла
-                    float frameRatem2v = ffmpegHelper.GetVideoFrameRate($"{IOStore.tempFolder}/{file.media}");
+                    // Получаем фреймрейт m2v файла
+                    float frameRatem2v = ffmpegHelper.GetVideoFrameRate($"{IOStore.inputFolder}/{file.filename}.m2v");
                     Logger.WriteLine($"Video Frameate (m2v): {frameRatem2v} fps");
 
                     // Конвертируем m2v -> avi, hca -> wav
-                    ffmpegHelper.ConvertInFfmpeg($"{IOStore.input}/{file.filename}.m2v", $"{IOStore.input}/{file.filename}.hca", $"{IOStore.tempFolder}/{file.media}", $"{IOStore.tempFolder}/{file.audio}", frameRatem2v);
+                    ffmpegHelper.ConvertInFfmpeg($"{IOStore.inputFolder}/{file.filename}.m2v", $"{IOStore.inputFolder}/{file.filename}.hca", $"{IOStore.tempFolder}/{file.media}", $"{IOStore.tempFolder}/{file.audio}", frameRatem2v);
                     Logger.WriteLine($"m2v -> avi, hca -> wav completed");
 
                     // Get the bitrate of the AVI video file
                     int videoBitrate = ffmpegHelper.GetVideoBitrate($"{IOStore.tempFolder}/{file.filename}.avi");
-                    Logger.WriteLine($"Video Bitrate (converted avi): {videoBitrate} b/s");
+                    Logger.WriteLine($"Video Bitrate: {videoBitrate} b/s");
 
                     // Get the bitrate of the AVI video file
                     float frameRate = ffmpegHelper.GetVideoFrameRate($"{IOStore.tempFolder}/{file.filename}.avi");
@@ -142,7 +142,7 @@ namespace USM_builder
                     convertInVideoEncoder($"{IOStore.tempFolder}/{file.filename}.avi", $"{IOStore.tempFolder}/{file.filename}.wav", file.txt, videoBitrate, audioBitrate, frameRate);
 
                     // Deleting unnecessary files
-                    //removeTempFiles($"{file.filename}.avi", $"{file.filename}.wav", file.txt);
+                    removeTempFiles($"{file.filename}.avi", $"{file.filename}.wav", file.txt);
                 }
             }
             else
@@ -154,10 +154,10 @@ namespace USM_builder
                     FfmpegHelper ffmpegHelper = new(IOStore.ffmpegPath, IOStore.ffprobePath);
 
                     // Получаем битрейт m2v файла
-                    float frameRatem2v = ffmpegHelper.GetVideoFrameRate($"{IOStore.tempFolder}/{file.media}");
+                    float frameRatem2v = ffmpegHelper.GetVideoFrameRate($"{IOStore.inputFolder}/{file.filename}.m2v");
                     Logger.WriteLine($"Video Frameate (m2v): {frameRatem2v} fps");
 
-                    ffmpegHelper.ConvertInFfmpeg($"{IOStore.input}/{file.filename}.m2v", $"{IOStore.input}/{file.filename}.hca", $"{IOStore.tempFolder}/{file.media}", $"{IOStore.tempFolder}/{file.audio}", frameRatem2v);
+                    ffmpegHelper.ConvertInFfmpeg($"{IOStore.inputFolder}/{file.filename}.m2v", $"{IOStore.inputFolder}/{file.filename}.hca", $"{IOStore.tempFolder}/{file.media}", $"{IOStore.tempFolder}/{file.audio}", frameRatem2v);
 
                     // Get the bitrate of the AVI video file
                     int videoBitrate = ffmpegHelper.GetVideoBitrate($"{IOStore.tempFolder}/{file.filename}.avi");
@@ -182,7 +182,7 @@ namespace USM_builder
 
         public void removeNullCharacters(String subtitleFileName)
         {
-            string txtFilePath = $"{IOStore.input}/{subtitleFileName}";
+            string txtFilePath = $"{IOStore.inputFolder}/{subtitleFileName}";
             string txtFile = File.ReadAllText(txtFilePath).Replace("\0", "");
             string outputFilePath = $"{IOStore.tempFolder}/{subtitleFileName}";
             File.WriteAllTextAsync(outputFilePath, txtFile);
@@ -246,7 +246,7 @@ namespace USM_builder
         {
             Logger.WriteLine("Scaleform - внесение параметров для конвертации...");
             ProcessStartInfo processStartInfo = new();
-            string outputFile = $"{IOStore.output}/{Path.GetFileNameWithoutExtension(videoFileName)}.usm";
+            string outputFile = $"{IOStore.outputFolder}/{Path.GetFileNameWithoutExtension(videoFileName)}.usm";
             processStartInfo.FileName = IOStore.encoderPath;
             if (!IOStore.doNotUseSubtitles)
             {

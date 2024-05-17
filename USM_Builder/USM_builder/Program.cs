@@ -30,7 +30,7 @@ int main()
     IOStore.Initialize(args);
 
     Builder builder = new();
-    if (builder.readFileNames(IOStore.input) == 0)          // Считываем названия файлов
+    if (builder.readFileNames(IOStore.inputFolder) == 0)          // Считываем названия файлов
     {
         Console.WriteLine("Файлы не найдены");
         return 0;
@@ -41,7 +41,7 @@ int main()
         builder.createPlaceHolderSubtitleFile();            // Создание файла если не существует
     }
     builder.createFolder("usm_builder_temp/");              // Создание папки если не существует
-    builder.createFolder(IOStore.output);                   // Создание папки если не существует
+    builder.createFolder(IOStore.outputFolder);                   // Создание папки если не существует
     builder.encodeAll();                                    // Собираем в usm
     Console.WriteLine("Папку \"usm_builder_temp\" можете удалять.");
 
