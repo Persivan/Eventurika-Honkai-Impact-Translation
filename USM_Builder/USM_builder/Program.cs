@@ -40,8 +40,8 @@ int Main()
     {
         builder.CreatePlaceHolderSubtitleFile();            // Создание файла если не существует
     }
-    builder.CreateFolder(IOStore.tempFolder);              // Создание папки если не существует
-    builder.CreateFolder(IOStore.outputFolder);                   // Создание папки если не существует
+    builder.CreateFolder(IOStore.tempFolder);               // Создание папки если не существует
+    builder.CreateFolder(IOStore.outputFolder);             // Создание папки если не существует
     builder.EncodeAll();                                    // Собираем в usm
     Console.WriteLine("Папку \"usm_builder_temp\" можете удалять.");
 
