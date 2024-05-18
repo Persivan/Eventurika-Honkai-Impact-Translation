@@ -50,7 +50,7 @@ Scaleform VideoEncoder - для сборки USM файлов [можно тут
 8. Закидываем файл (файлы) из `usm_videos` (Story05_CG01.usm)
 В этой же папке будет создана два файла: `Story05_CG01_40534656.m2v` и `Story05_CG01_40534641.hca`. m2v - видео-дорожка. hca - аудио-дорожка.
 9. Переносим эти файлы (`Story05_CG01_40534656.m2v` и `Story05_CG01_40534641.hca`) в папку `usm_builder_input`.
-10. Переименовываем эти файлы, убираем мусор из названия (`Story05_CG01.m2v` и `Story05_CG01.hca`).
+10. Переименовываем эти файлы, убираем мусор из названия (`Story05_CG01.m2v` и `Story05_CG01.hca`). Для этого можно выделить оба файла и нажать F2, тогда переименуются выделенные файлы.
 ![mstsc_uesY7aFNJP](https://github.com/Persivan/Eventurika-Honkai-Impact-Translation/assets/39733368/b2964613-91a6-4d4d-988a-ca5dbe0bf4a6)
 12. На этом этапе в папке `usm_builder_input` можно размещать множество файлов. Для создания одного .usm файла в папке `usm_builder_input` должно быть 3 файла
     * FILENAME.m2v - видео (`Story05_CG01.m2v`, используемый кодек H.264 aka AVC)
