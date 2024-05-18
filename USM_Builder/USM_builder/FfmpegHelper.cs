@@ -162,7 +162,6 @@ namespace USM_builder
                 float tempFps = (float)numerator / denominator;
                 string stringFps = tempFps.ToString("F3");
                 float.TryParse(stringFps, out float finalFps);
-                //Console.WriteLine(tempFps.ToString("F3"));
                 return finalFps;
             }
             else

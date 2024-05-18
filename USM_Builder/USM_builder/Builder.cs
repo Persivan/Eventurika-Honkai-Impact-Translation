@@ -26,7 +26,7 @@ namespace USM_builder
 #if DEBUG
             Console.WriteLine("Do Not Use Subtitles: " + IOStore.doNotUseSubtitles);
 #endif
-            // Получаем список .mp4 файлов
+            // Получаем список .m2v/.mp4 файлов
             string[] mp4Files = Directory.GetFiles(filePath, "*.m2v");
 
             string[] txtFiles = [""];
@@ -121,6 +121,7 @@ namespace USM_builder
 
                     // Конвертируем m2v -> avi, hca -> wav
                     ffmpegHelper.ConvertInFfmpeg($"{IOStore.inputFolder}/{file.filename}.m2v", $"{IOStore.inputFolder}/{file.filename}.hca", $"{IOStore.tempFolder}/{file.media}", $"{IOStore.tempFolder}/{file.audio}", frameRatem2v);
+                    // @todo Добавить проверку что после работы ffmpeg файлы в temp были созданы
                     Logger.WriteLine($"m2v -> avi, hca -> wav completed");
 
                     // Get the bitrate of the AVI video file
@@ -245,7 +246,7 @@ namespace USM_builder
         private void ConvertInVideoEncoder(String videoFileName, String audioFileName, String subtitleFileName, int VideoBitrate, int AudioBitrate, float Framerate)
         {
             // Для Энкодера может потребоваться округление Framerate во избежании получения 10 фпс в файле на выходе
-            // int IntFramerate = (int)Math.Round(Framerate, MidpointRounding.AwayFromZero);
+            int IntFramerate = (int)Math.Round(Framerate, MidpointRounding.AwayFromZero);
             Logger.WriteLine("Scaleform - внесение параметров для конвертации...");
             ProcessStartInfo processStartInfo = new();
             string outputFile = $"{IOStore.outputFolder}/{Path.GetFileNameWithoutExtension(videoFileName)}.usm";
@@ -258,7 +259,7 @@ namespace USM_builder
                 outputFile,
                 VideoBitrate,
                 audioFileName != null ? $"-audio00=\"{audioFileName}\"" : "",
-                Framerate,
+                IntFramerate,
                 $"{IOStore.tempFolder}/{subtitleFileName}",
                 $"{IOStore.tempFolder}/placeholder_subtitles.txt"
                 );
@@ -271,7 +272,7 @@ namespace USM_builder
                     outputFile,
                     VideoBitrate,
                     audioFileName != null ? $"-audio00=\"{audioFileName}\"" : "",
-                    Framerate
+                    IntFramerate
                     );
             }
             processStartInfo.UseShellExecute = false;
