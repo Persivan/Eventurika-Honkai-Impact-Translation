@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -70,6 +71,7 @@ namespace USM_builder
             {
                 return bitrate;
             }
+            Logger.WriteLine("Ошибка - код 05, сообщите разработчикам");
             throw new Exception("Bitrate not found in ffprobe output.");
         }
 
@@ -157,7 +159,11 @@ namespace USM_builder
             if (parts.Length == 2 && int.TryParse(parts[0], out int numerator) && int.TryParse(parts[1], out int denominator))
             {
                 // Calculate the float frame rate
-                return (float)numerator / denominator;
+                float tempFps = (float)numerator / denominator;
+                string stringFps = tempFps.ToString("F3");
+                float.TryParse(stringFps, out float finalFps);
+                //Console.WriteLine(tempFps.ToString("F3"));
+                return finalFps;
             }
             else
             {
