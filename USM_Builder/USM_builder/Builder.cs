@@ -245,7 +245,7 @@ namespace USM_builder
         private void ConvertInVideoEncoder(String videoFileName, String audioFileName, String subtitleFileName, int VideoBitrate, int AudioBitrate, float Framerate)
         {
             // Для Энкодера может потребоваться округление Framerate во избежании получения 10 фпс в файле на выходе
-            // Framerate = (int)Math.Round(Framerate, MidpointRounding.AwayFromZero);
+            // int IntFramerate = (int)Math.Round(Framerate, MidpointRounding.AwayFromZero);
             Logger.WriteLine("Scaleform - внесение параметров для конвертации...");
             ProcessStartInfo processStartInfo = new();
             string outputFile = $"{IOStore.outputFolder}/{Path.GetFileNameWithoutExtension(videoFileName)}.usm";
