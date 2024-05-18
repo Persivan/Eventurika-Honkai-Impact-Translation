@@ -1,5 +1,5 @@
 @echo off
-title .usm_srt_extract
+title .usm_srt_extract_en
 setlocal enabledelayedexpansion
 
 ::set "folder_name=Story05_CG01"
@@ -12,7 +12,7 @@ mkdir "!log_folder!"
 
 set "usm_video=usm_videos/%folder_name%.usm"
 
-set "file_index=1"
-"distr/USM_subs_toolbox.exe" -extractSbt "!usm_video!" "!srt_folder!/lang_!file_index!.srt" -l !file_index! > "!log_folder!/extract_lang_!file_index!.log"
+set "lang_index=1"
+"distr/USM_subs_toolbox.exe" -extractSbt "!usm_video!" "!srt_folder!/lang_!lang_index!.srt" -l !lang_index! > "!log_folder!/extract_lang_!lang_index!.log"
 
 endlocal
