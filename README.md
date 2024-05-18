@@ -21,7 +21,7 @@ Scaleform VideoEncoder - для сборки USM файлов [можно тут
 
 **Конвертировать медиа после VGMToolBox** - ffmpeg, использую [билд отсюда](https://www.gyan.dev/ffmpeg/builds/). Размещена, где угодно. В скрипте указывается путь до нее.
 
-**Экспортировать медиа и аудио из usm** - VGMToolBox, использую [билд отсюда](https://sourceforge.net/projects/vgmtoolbox/), подробнее `vgmtoolbox_output/readme.md`. Размещена, где угодно. В скриптах не используется.
+**Экспортировать медиа и аудио из usm** - VGMToolBox, использую [билд отсюда](https://sourceforge.net/projects/vgmtoolbox/). Размещена, где угодно. В скриптах не используется.
 
 **Упаковщик USM** - USM_builder - запаковывает файлы обратно в формат, пригодный игре.
 
@@ -94,7 +94,7 @@ Scaleform VideoEncoder - для сборки USM файлов [можно тут
 3. Запускаем скрипт
 Достанет 0-7 дорожки сабов в папку `./srt/6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a/`, лог в `./logs/6.5_Birthday_Mei_efbc04aec45adb226958ad3f7582d70a/`
 
-Написал скрипт `.usm_srt_extract_en_.bat` - достает из usm файла англ сабы
+Написал скрипт `.usm_srt_extract_en.bat` - достает из usm файла англ сабы
 1. Помещаем файл из `BH3_Data\StreamingAssets\Video` в `./usm_videos/`
 2. Вводим путь к файлу при запуске скрипта **ИЛИ** прописываем название файла внутри скрипта
   1. Указываем путь - ничего не трогаем, просто запускаем скрипт
