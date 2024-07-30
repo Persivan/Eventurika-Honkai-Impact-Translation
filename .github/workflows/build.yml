@@ -20,7 +20,7 @@ jobs:
         dotnet-version: '8.0.x'  # Specify the .NET version
 
     - name: Restore Dependencies
-      run: dotnet restore
+      run: dotnet restore ./USM_Builder/USM_builder/USM_builder.csproj
 
     - name: Build
       run: dotnet build ./USM_Builder/USM_builder/USM_builder.csproj --configuration Release
