@@ -23,10 +23,10 @@ jobs:
       run: dotnet restore
 
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet build ./USM_Builder/USM_builder/USM_builder.csproj --configuration Release
 
     - name: Publish
-      run: dotnet publish --configuration Release --output ./publish
+      run: dotnet publish ./USM_Builder/USM_builder/USM_builder.csproj --configuration Release --output ./publish
 
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v3
