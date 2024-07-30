@@ -1,0 +1,35 @@
+name: Build .NET 8 Console App
+
+on:
+  push:
+    branches:
+      - pipeline
+
+jobs:
+  build:
+    name: Build and Upload Artifact
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'  # Specify the .NET version
+
+    - name: Restore Dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release
+
+    - name: Publish
+      run: dotnet publish --configuration Release --output ./publish
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: console-app-build
+        path: ./publish
