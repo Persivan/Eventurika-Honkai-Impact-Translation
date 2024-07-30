@@ -3,6 +3,7 @@ name: Build .NET 8 Console App
 on:
   push:
     branches:
+      - main
       - pipeline
 
 jobs:
