@@ -110,7 +110,7 @@ namespace USM_builder
 
         public void ConvertInFfmpeg(string videoFilePath, string audioFilePath, string outputVideoFilePath, string outputAudioFilePath, float framerate)
         {
-            string command = $"-i \"{videoFilePath}\" -i \"{audioFilePath}\" -c:v rawvideo -pix_fmt yuv420p -r {framerate} \"{outputVideoFilePath}\" \"{outputAudioFilePath}\" -y";
+            string command = $"-i \"{videoFilePath}\" -i \"{audioFilePath}\" -c:v copy -pix_fmt yuv420p -r {framerate} \"{outputVideoFilePath}\" \"{outputAudioFilePath}\" -y";
             RunFFmpegCommand(command);
             // @todo если output вернул ошибку, надо кидать исключение
             //string output = "pepega";
