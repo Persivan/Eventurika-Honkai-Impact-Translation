@@ -142,7 +142,7 @@ namespace USM_builder
                     ConvertInVideoEncoder($"{IOStore.tempFolder}/{file.filename}.avi", $"{IOStore.tempFolder}/{file.filename}.wav", file.txt, videoBitrate, audioBitrate, frameRate);
 
                     // Deleting unnecessary files
-                    RemoveTempFiles($"{file.filename}.avi", $"{file.filename}.wav", file.txt);
+                    //RemoveTempFiles($"{file.filename}.avi", $"{file.filename}.wav", file.txt);
                 }
             }
             else
